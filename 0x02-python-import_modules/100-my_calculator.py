@@ -2,7 +2,7 @@
 
 if __name__ == "__main__":
     import sys
-    from calculator_1 import add, sub, mul, div 
+    from calculator_1 import add, sub, mul, div
 
     if len(sys.argv) != 4:
         print(f"Usage: {sys.argv[0]} <a> <operator> <b>")
