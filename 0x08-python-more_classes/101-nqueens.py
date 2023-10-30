@@ -43,6 +43,7 @@ def nqueens(size):
                 printsolution(queens)
     queencalc(0)
 
+
 if len(sys.argv) != 2:
     print("Usage: nqueens N")
     exit()
