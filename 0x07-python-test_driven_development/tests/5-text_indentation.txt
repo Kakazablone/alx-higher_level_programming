@@ -1,0 +1,105 @@
+Test cases for Text Indentation Module
+======================================
+
+USAGE text_indentation(text)
+---------------------------
+
+>>> text_indentation = __import__('5-text_indentation').text_indentation
+
+Check for correct output
+>>> text_indentation("Hello.")
+Hello.
+<BLANKLINE>
+
+Check for correct output
+>>> text_indentation("We.?: Are.? Happy.")
+We.
+<BLANKLINE>
+?
+<BLANKLINE>
+:
+<BLANKLINE>
+Are.
+<BLANKLINE>
+?
+<BLANKLINE>
+Happy.
+<BLANKLINE>
+
+Check for non-string
+>>> text_indentation(24)
+Traceback (most recent call last):
+...
+TypeError: text must be a string
+
+Check for tuple with strings
+>>> text_indentation(("HELLO", "HI"))
+Traceback (most recent call last):
+...
+TypeError: text must be a string
+
+Check for list with strings
+>>> text_indentation(["HELLO", "HI"])
+Traceback (most recent call last):
+...
+TypeError: text must be a string
+
+Check for list with string
+>>> text_indentation(["Hello"])
+Traceback (most recent call last):
+...
+TypeError: text must be a string
+
+Check for dict with strings
+>>> text_indentation({"Hi": "Hello"})
+Traceback (most recent call last):
+...
+TypeError: text must be a string
+
+Check for string with no punctuation
+>>> text_indentation("Hello")
+Hello
+
+Check when passing None
+>>> text_indentation(None)
+Traceback (most recent call last):
+...
+TypeError: text must be a string
+
+Check for double string
+>>> text_indentation("Hello" "World")
+HelloWorld
+
+Check for correct output
+>>> text_indentation("Hello. How are you?")
+Hello.
+<BLANKLINE>
+How are you?
+<BLANKLINE>
+
+Check for correct output
+>>> text_indentation("ALX Software School")
+ALX Software School
+
+Check for correct output with a lot of spaces
+>>> text_indentation("Hello.     World")
+Hello.
+<BLANKLINE>
+World
+
+Check for whitespace at the beginning of string
+>>> text_indentation("      Hello.          World.")
+Hello.
+<BLANKLINE>
+World.
+<BLANKLINE>
+
+Check for space at the end of string
+>>> text_indentation("   I.?    Am  Samba: ")
+I.
+<BLANKLINE>
+?
+<BLANKLINE>
+Am  Samba:
+<BLANKLINE>
+
