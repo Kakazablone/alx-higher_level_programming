@@ -48,6 +48,3 @@ if __name__ == "__main__":
             print_stats(size, status_codez)
     except KeyboardInterrupt:
 	print_stats(size, status_codez)
-
-    finally:
-        print_stats(size, status_codez)
