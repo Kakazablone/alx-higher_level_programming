@@ -6,4 +6,4 @@ def class_to_json(obj):
     """ Turns an object into nice representation for JSON
     Args:
         obj (object): object to transform"""
-    return(obj.__dict__)
+    return obj.__dict__
