@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 
 """Reads from standard input and computes metrics.
-Prints the following statistics after every ten lines or
-the input of a keyboard interruption (CTRL + C):
+Prints the following statistics after every ten lines or the input of a
+keyboard interruption (CTRL + C):
     - Total file size so far
     - Count of read status codes so far."""
 
@@ -46,5 +46,6 @@ if __name__ == "__main__":
                 pass
 
             print_stats(size, status_codez)
+
     except KeyboardInterrupt:
-	print_stats(size, status_codez)
+        print_stats(size, status_codez)
