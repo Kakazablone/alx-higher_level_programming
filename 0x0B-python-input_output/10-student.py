@@ -9,7 +9,7 @@ class Student():
         """ Initializes a student
         Args:
             first_name (str): Student's first name
-	    last_name (str): Student's last name
+            last_name (str): Student's last name
             age (int): age of Student"""
         self.first_name = first_name
         self.last_name = last_name
