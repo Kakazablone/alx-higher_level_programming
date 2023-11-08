@@ -1,51 +1,46 @@
 #!/usr/bin/python3
 
 """Reads from standard input and computes metrics.
-Prints the following statistics after every ten lines or the input of a
-keyboard interruption (CTRL + C):
-    - Total file size so far
-    - Count of read status codes so far."""
+After every ten lines or the input of a keyboard interruption (CTRL + C),
+prints the following statistics:
+- Total file size up to that point.
+- Count of read status codes up to that point.
+"""
 
+import sys
 
-def print_stats(size, status_codez):
-    """Print accumulated metrics."""
-    print("File size: {}".format(size))
-    for key in sorted(status_codez):
-        print("{}: {}".format(key, status_codez[key]))
+# Initialize variables to store metrics
+total_size = 0
+s_codecount = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
+line_count = 0
 
+def print_statistics():
+    print(f"File size: {total_size}")
+    for status_code in sorted(s_codecount):
+        count = s_codecount[status_code]
+        if count > 0:
+            print(f"{status_code}: {count}")
 
-if __name__ == "__main__":
-    import sys
+try:
+    for line in sys.stdin:
+        # Split the input line and extract the status code and file size
+        line_toks = line.split()
+        if len(line_toks) >= 8:
+            status_code = int(line_toks[-2])
+            file_size = int(line_toks[-1])
 
-    size = 0
-    status_codez = {}
-    compare_codes = ['200', '301', '400', '401', '403', '404', '405', '500']
-    count = 0
+            # Increment the total file size with every line read
+            total_size += file_size
 
-    try:
-        for line in sys.stdin:
-            if count == 10:
-                print_stats(size, status_codez)
-                count = 1
-            else:
-                count += 1
+            # Update status code counts
+            if status_code in s_codecount:
+                s_codecount[status_code] += 1
 
-            line_toks = line.split()
+            # Increment line count
+            line_count += 1
 
-            try:
-                file_size = int(line_toks[-1])
-                size += file_size
-            except (IndexError, ValueError):
-                pass
-
-            try:
-                status_code = line_toks[-2]
-                if status_code in compare_codes:
-                    status_codez[status_code] = status_codez.get(status_code, 0) + 1
-            except IndexError:
-                pass
-
-            print_stats(size, status_codez)
-
-    except KeyboardInterrupt:
-        print_stats(size, status_codez)
+            # Print statistics every 10 lines and after processing 10 lines
+            if line_count % 10 == 0:
+                print_statistics()
+except KeyboardInterrupt:
+    print_statistics()
