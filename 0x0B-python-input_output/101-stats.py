@@ -3,30 +3,39 @@
 After every ten lines or the input of a keyboard interruption (CTRL + C),
 prints the following statistics:
     - Total file size up to that point.
-    - Count of read status codes up to that point.
-"""
+    - Count of read status codes up to that point."""
 import sys
 
-codes = {}
-size = 0
-count = 0
+"""Initialize dictionaries to store status code counts
+and total file size."""
+s_code_count = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
+total_file_size = 0
 
 
 try:
+    line_count = 0
     for line in sys.stdin:
         line_toks = line.split(" ")
-        code = line_toks[-2]
-        if code in codes:
-            codes[code] += 1
-        else:
-            codes[code] = 1
-        size += int(line_toks[-1])
-        count += 1
-        if count % 10 == 0:
-            print("Size:", size)
-            for code in sorted(codes.keys()):
-                print("{}: {}".format(code, codes[code]))
+        if len(line_toks) >= 8:
+            status_code = int(line_toks[-2])
+            file_size = int(line_toks[-1])
+            total_file_size += file_size
+
+            if status_code in s_code_count:
+                s_code_count[status_code] += 1
+
+            line_count += 1
+
+            if line_count % 10 == 0:
+                print("File size: ", total_file_size)
+                for code in sorted(s_code_count.keys()):
+                    if s_code_count[code] > 0:
+                        print("{}: {}".format(code, s_code_count[code]))
+
+except KeyboardInterrupt:
+    pass
 finally:
-    print("Size:", size)
-    for code in sorted(codes.keys()):
-        print("{}: {}".format(code, codes[code]))
+    print("File size: ", total_file_size)
+    for code in sorted(s_code_count.keys()):
+        if s_code_count[code] > 0:
+            print("{}: {}".format(code, s_code_count[code]))
