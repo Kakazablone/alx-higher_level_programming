@@ -42,7 +42,7 @@ try:
             line_count += 1
 
             # Print statistics every 10 lines
-            if line_count % 10 == 0:
+	    if line_count % 10 == 0 and line_count == 10:
                 print_statistics()
 except KeyboardInterrupt:
     print_statistics()
