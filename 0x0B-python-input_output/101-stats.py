@@ -1,46 +1,32 @@
 #!/usr/bin/python3
-
 """Reads from standard input and computes metrics.
 After every ten lines or the input of a keyboard interruption (CTRL + C),
 prints the following statistics:
-- Total file size up to that point.
-- Count of read status codes up to that point.
+    - Total file size up to that point.
+    - Count of read status codes up to that point.
 """
-
 import sys
 
-# Initialize variables to store metrics
-total_size = 0
-s_codecount = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
-line_count = 0
+codes = {}
+size = 0
+count = 0
 
-def print_statistics():
-    print(f"File size: {total_size}")
-    for status_code in sorted(s_codecount):
-        count = s_codecount[status_code]
-        if count > 0:
-            print(f"{status_code}: {count}")
 
 try:
     for line in sys.stdin:
-        # Split the input line and extract the status code and file size
-        line_toks = line.split()
-        if len(line_toks) >= 8:
-            status_code = int(line_toks[-2])
-            file_size = int(line_toks[-1])
-
-            # Increment the total file size with every line read
-            total_size += file_size
-
-            # Update status code counts
-            if status_code in s_codecount:
-                s_codecount[status_code] += 1
-
-            # Increment line count
-            line_count += 1
-
-            # Print statistics every 10 lines and after processing 10 lines
-            if line_count % 10 == 0:
-                print_statistics()
-except KeyboardInterrupt:
-    print_statistics()
+        line_toks = line.split(" ")
+        code = line_toks[-2]
+        if code in codes:
+            codes[code] += 1
+        else:
+            codes[code] = 1
+        size += int(line_toks[-1])
+        count += 1
+        if count % 10 == 0:
+            print("Size:", size)
+            for code in sorted(codes.keys()):
+                print("{}: {}".format(code, codes[code]))
+finally:
+    print("Size:", size)
+    for code in sorted(codes.keys()):
+        print("{}: {}".format(code, codes[code]))
