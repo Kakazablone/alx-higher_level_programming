@@ -157,6 +157,7 @@ class TestSquare(unittest.TestCase):
         with self.assertRaises(TypeError) as err:
             s1 = Square((3, 4), 4, 3, 2)
         self.assertEqual(str(err.exception), "width must be an integer")
+
     def test_square_string_size(self):
         """ Test when size is passed a string"""
 
@@ -269,6 +270,7 @@ class TestSquare(unittest.TestCase):
         self.assertEqual(capturedOutput.getvalue(), squ_print)
 
         sys.stdout = sys.__stdout__
+
     def test_square_update_three_arg(self):
         """ Test square with three args"""
 
