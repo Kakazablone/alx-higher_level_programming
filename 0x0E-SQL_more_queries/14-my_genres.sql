@@ -1,3 +1,5 @@
+-- uses the hbtn_0d_tvshows database to lists all genres of the show Dexter
+-- Results be sorted in ascending order by the genre name
 SELECT tv_genres.name AS name
 FROM tv_show_genres
 INNER JOIN tv_genres
