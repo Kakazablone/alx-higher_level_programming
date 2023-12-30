@@ -2,6 +2,7 @@
 """Module for creating a base class"""
 import json
 import csv
+import turtle
 
 
 class Base:
@@ -136,3 +137,72 @@ class Base:
         except FileNotFoundError:
             return instance_list
         return instance_list
+
+@staticmethod
+def draw_shapes(shapes):
+    """Method that draws shapes with turtle module"""
+    screen = turtle.Screen()
+    screen.title("First draw with Python and turtle module")
+    screen.bgcolor("black")
+
+    turtle_pen = turtle.Turtle()
+    turtle_pen.shape("turtle")
+
+    for shape in shapes:
+        data = shape.to_dictionary()
+        turtle_pen.penup()
+        turtle_pen.goto(data['x'], data['y'])
+        turtle_pen.pendown()
+
+        if isinstance(shape, Rectangle):
+            draw_rectangle(turtle_pen, data['width'], data['height'], "blue")
+        elif isinstance(shape, Square):
+            draw_square(turtle_pen, data['size'], "red")
+
+        turtle_pen.penup()
+
+    turtle.done()
+
+def draw_rectangle(t, width, height, color):
+    """Draws a rectangle with the given turtle and dimensions."""
+    t.pencolor(color)
+    t.fillcolor("white")
+    t.pensize(5)
+    t.speed(1)
+
+    for _ in range(2):
+        t.forward(width)
+        t.left(90)
+        t.forward(height)
+        t.left(90)
+
+def draw_square(t, size, color):
+    """Draws a square with the given turtle and size."""
+    t.pencolor(color)
+    t.fillcolor("white")
+    t.pensize(5)
+    t.speed(0.5)
+
+    for _ in range(4):
+        t.forward(size)
+        t.left(90)
+
+class Rectangle:
+    def __init__(self, x, y, width, height):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+
+    def to_dictionary(self):
+        return {'x': self.x, 'y': self.y, 'width': self.width, 'height': self.height}
+
+class Square:
+    def __init__(self, x, y, size):
+        self.x = x
+        self.y = y
+        self.size = size
+
+    def to_dictionary(self):
+        return {'x': self.x, 'y': self.y, 'size': self.size}
+    
