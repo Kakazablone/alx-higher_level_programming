@@ -139,70 +139,52 @@ class Base:
         return instance_list
 
 @staticmethod
-def draw_shapes(shapes):
-    """Method that draws shapes with turtle module"""
+def draw_shapes(rectangles, squares):
+    def draw_rectangle(t, x, y, width, height):
+        t.pencolor("blue")
+        t.fillcolor("white")
+        t.pensize(5)
+        t.speed(1)
+
+        t.penup()
+        t.goto(x, y)
+        t.pendown()
+
+        for _ in range(2):
+            t.forward(width)
+            t.left(90)
+            t.forward(height)
+            t.left(90)
+
+        t.penup()
+
+    def draw_square(t, x, y, size):
+        t.pencolor("red")
+        t.fillcolor("white")
+        t.pensize(5)
+        t.speed(0.5)
+
+        t.penup()
+        t.goto(x, y)
+        t.pendown()
+
+        for _ in range(4):
+            t.forward(size)
+            t.left(90)
+
+        t.penup()
+
     screen = turtle.Screen()
-    screen.title("First draw with Python and turtle module")
+    screen.title("My first draw with Python and turtle module")
     screen.bgcolor("black")
 
     turtle_pen = turtle.Turtle()
     turtle_pen.shape("turtle")
 
-    for shape in shapes:
-        data = shape.to_dictionary()
-        turtle_pen.penup()
-        turtle_pen.goto(data['x'], data['y'])
-        turtle_pen.pendown()
+    for rectangle in rectangles:
+        draw_rectangle(turtle_pen, *rectangle)
 
-        if isinstance(shape, Rectangle):
-            draw_rectangle(turtle_pen, data['width'], data['height'], "blue")
-        elif isinstance(shape, Square):
-            draw_square(turtle_pen, data['size'], "red")
-
-        turtle_pen.penup()
+    for square in squares:
+        draw_square(turtle_pen, *square)
 
     turtle.done()
-
-def draw_rectangle(t, width, height, color):
-    """Draws a rectangle with the given turtle and dimensions."""
-    t.pencolor(color)
-    t.fillcolor("white")
-    t.pensize(5)
-    t.speed(1)
-
-    for _ in range(2):
-        t.forward(width)
-        t.left(90)
-        t.forward(height)
-        t.left(90)
-
-def draw_square(t, size, color):
-    """Draws a square with the given turtle and size."""
-    t.pencolor(color)
-    t.fillcolor("white")
-    t.pensize(5)
-    t.speed(0.5)
-
-    for _ in range(4):
-        t.forward(size)
-        t.left(90)
-
-class Rectangle:
-    def __init__(self, x, y, width, height):
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
-
-    def to_dictionary(self):
-        return {'x': self.x, 'y': self.y, 'width': self.width, 'height': self.height}
-
-class Square:
-    def __init__(self, x, y, size):
-        self.x = x
-        self.y = y
-        self.size = size
-
-    def to_dictionary(self):
-        return {'x': self.x, 'y': self.y, 'size': self.size}
-    
