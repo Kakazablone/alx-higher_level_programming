@@ -1,5 +1,10 @@
-$.get('https://swapi.co/api/films/?format=json', function (data) {
-  $.each(data['results'], function (index, dict) {
-    $('#list_movies').append('<li>' + dict['title'] + '</li>');
-  });
-}, 'json');
+$(document).ready(function () {
+	$.getJSON(
+		"https://swapi-api.alx-tools.com/api/films/?format=json",
+		function (data) {
+			data.results.forEach(function (film) {
+				$("<li>").text(film.title).appendTo("ul#list_movies");
+			})
+		}
+	)
+});
